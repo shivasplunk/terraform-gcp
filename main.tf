@@ -1,24 +1,10 @@
-provider "google" {
-  credentials = file("gcp-key.json")
-  project     = "terraform-project-489115"
-  region      = "us-central1"
+variable "gcp_credentials" {
+  type      = string
+  sensitive = true
 }
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-vm"
-  machine_type = "e2-micro"
-  zone         = "us-central1-a"
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-11"
-    }
-  }
-
-  network_interface {
-    network = "default"
-
-    access_config {
-    }
-  }
+provider "google" {
+  credentials = var.gcp_credentials
+  project     = "terraform-project-489115"
+  region      = "us-central1"
 }
